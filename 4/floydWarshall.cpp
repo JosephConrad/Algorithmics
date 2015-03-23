@@ -41,14 +41,14 @@ int ** matrix(int n) {
     }
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            network[i][j] = 0; 
+            network[i][j] = 0;
         }
     }
     return network;
 }
 
 
-void edmondsKarp(int ** network, int n, int m, int s, int t) {
+void floydWarshall(int ** network, int n, int m, int s, int t) {
     int ** D = matrix(n);
     REP(i, n) {
         REP(j, n) {
@@ -58,7 +58,7 @@ void edmondsKarp(int ** network, int n, int m, int s, int t) {
     }
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            if (network[i][j] != 0) 
+            if (network[i][j] != 0)
                 D[i][j] = network[i][j];
         }
     }
@@ -69,25 +69,25 @@ void edmondsKarp(int ** network, int n, int m, int s, int t) {
             }
         }
     }
-    printf("SHORTEST PATHS BETWEEN VERTICES:\n"); 
+    printf("SHORTEST PATHS BETWEEN VERTICES:\n");
     printTable(D, n);
 }
 
 int main() {
     int n, m, s, t;
     scanf("%d%d%d%d", &n, &m, &s, &t);
-   
+
     int ** network = matrix(n);
-    
+
     int u, v, w;
     for (int i = 0; i < m; i++) {
         scanf("%d%d%d", &u, &v, &w);
         network[u][v] = w;
         network[v][u] = w;
     }
-    
-    printf("INPUT GRAPH:\n"); 
+
+    printf("INPUT GRAPH:\n");
     printTable(network, n);
-    edmondsKarp(network, n, m, s, t);
+    floydWarshall(network, n, m, s, t);
 }
 
